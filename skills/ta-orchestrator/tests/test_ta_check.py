@@ -60,7 +60,7 @@ GOOD = {
 - 제목: 새 에이전트 규제 공지
 - 날짜: 2026. 11. 5.
 - 출처: https://example.org/notice
-- 요약: 규제 기관이 공지함
+- 요약: 규제 기관이 공지함 판별: 〔에이전트〕
 - 새로움: 처음 나온 지침
 - 상태: 선정
 """,
@@ -184,6 +184,12 @@ class T(unittest.TestCase):
         files['02_impact.md'] = files['02_impact.md'].replace('- 대상 기술 자체 근거: 크기 칸이 찬 행 4개 중 1건\n', '')
         write(self.d, files)
         self.assertIn('대상 기술 자체 근거', run(self.d, 'G2').stdout)
+
+    def test_g3_two_tags(self):
+        files = dict(GOOD)
+        files['03_signals/S-261107-01.md'] = files['03_signals/S-261107-01.md'].replace('판별: 〔에이전트〕', '판별: 〔에이전트〕 그러나 〔유사 기술〕에 가까움')
+        write(self.d, files)
+        self.assertIn('판별 표시가 하나가 아님', run(self.d, 'G3').stdout)
 
     def test_blank_templates_fail(self):
         """빈 템플릿을 그대로 두면 통과하지 못해야 함"""

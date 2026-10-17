@@ -22,7 +22,12 @@ def read(p):
 
 def empty(cell):
     c = (cell or '').strip()
-    return c == '' or bool(PLACEHOLDER.match(c)) or c in ('-', '—')
+    if c == '' or bool(PLACEHOLDER.match(c)) or c in ('-', '—'):
+        return True
+    # 자리 표시(〔…〕)와 칸 이름표('판별:')만 남은 칸도 빈 칸으로 본다
+    rest = re.sub(r'〔[^〕]*〕', '', c)
+    rest = re.sub(r'판별\s*[:：]', '', rest)
+    return rest.strip(' \t-—·:：') == ''
 
 def sections(text):
     """'## ' 제목 기준으로 나눈 {제목: 본문}"""
@@ -222,6 +227,9 @@ def g3(root, r):
             r.add('필수', 'G3', c.name, "출처가 추적 가능한 주소·파일이 아님 — 상태를 '출처 추적 불가'로")
         if st == '선정':
             selected += 1
+        tags = set(re.findall(r'〔(에이전트|유사 기술|판별 보류)〕', read(c)))
+        if len(tags) != 1:
+            r.add('권고', 'G3', c.name, f"판별 표시가 하나가 아님({', '.join(sorted(tags)) or '없음'}) — 〔에이전트〕/〔유사 기술〕/〔판별 보류〕 중 하나, 이번 사건 기준")
     reps = sorted(root.glob('03_watch_*.md'))
     if not reps:
         r.add('필수', 'G3', '03_watch_*.md', '주간 감시 보고가 없음')
