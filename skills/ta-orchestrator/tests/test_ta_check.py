@@ -36,6 +36,7 @@ GOOD = {
 - 승인: 박주이 2026. 10. 31.
 """,
 '02_impact.md': """# 영향 행렬
+- 대상 기술 자체 근거: 크기 칸이 찬 행 4개 중 1건
 ## 1. 영향 행렬
 | 번호 | 영향 영역 | 시행령 항목 | 영향받는 집단 | 방향 | 크기(근거 있는 사실) | 출처 | 중요도(리더) |
 |---|---|---|---|---|---|---|---|
@@ -177,6 +178,12 @@ class T(unittest.TestCase):
         write(self.d, files)
         r = run(self.d, 'G1')
         self.assertNotIn('자료 비었음', r.stdout)
+
+    def test_g2_own_evidence_line(self):
+        files = dict(GOOD)
+        files['02_impact.md'] = files['02_impact.md'].replace('- 대상 기술 자체 근거: 크기 칸이 찬 행 4개 중 1건\n', '')
+        write(self.d, files)
+        self.assertIn('대상 기술 자체 근거', run(self.d, 'G2').stdout)
 
     def test_blank_templates_fail(self):
         """빈 템플릿을 그대로 두면 통과하지 못해야 함"""

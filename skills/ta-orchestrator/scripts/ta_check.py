@@ -161,6 +161,9 @@ def g2(root, r):
     if not rows:
         r.add('필수', 'G2', '1. 영향 행렬', '채운 행이 없음')
         return
+    own = next((v for k, v in kv_lines(sections(text).get('_head', '')).items() if '대상 기술 자체 근거' in k), '')
+    if empty(own) or '〔' in own:
+        r.add('권고', 'G2', '머리', "'대상 기술 자체 근거: 크기 칸이 찬 행 N개 중 n건'을 적기 — 〔유사 기술〕 근거가 많은지 한눈에 보이게")
     items = ' '.join(x.get(col(head, '시행령 항목'), '') for x in rows)
     for k, pat in ITEM_KEYS.items():
         if not re.search(pat, items):
