@@ -74,12 +74,17 @@ def col(head, key):
     return None
 
 def kv_lines(text):
-    """'- 키: 값' 줄을 dict로"""
-    d = {}
+    """'- 키: 값' 줄을 dict로. 값이 비고 아래에 들여 쓴 하위 목록이 있으면 그것을 값으로 본다"""
+    d, cur = {}, None
     for line in text.splitlines():
-        m = re.match(r'^\s*-\s*([^:：]+)[:：]\s*(.*)$', line)
+        m = re.match(r'^-\s*([^:：]+)[:：]\s*(.*)$', line)
         if m:
-            d[m.group(1).strip()] = m.group(2).strip()
+            cur = m.group(1).strip()
+            d[cur] = m.group(2).strip()
+        elif cur and re.match(r'^\s+[-·*]\s*\S', line) and empty(d[cur]):
+            d[cur] = (d[cur] + ' ' + line.strip()).strip()
+        elif line.strip() and not line.startswith(' '):
+            cur = None
     return d
 
 class Report:

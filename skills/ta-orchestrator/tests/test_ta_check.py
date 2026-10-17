@@ -170,6 +170,14 @@ class T(unittest.TestCase):
     def test_g6_panel_label(self):
         self.mutate('07_panel_citizen_261121.md', ' — 증거 아님', '', 'G6', '증거 아님')
 
+    def test_g1_nested_list_counts_as_filled(self):
+        """'- 자료:' 아래 하위 목록으로 채운 경우 비었다고 하지 않음(실제 호출 시험에서 나온 오탐)"""
+        files = dict(GOOD)
+        files['01_scope.md'] = files['01_scope.md'].replace('- 자료: 공개 보고서', '- 자료:\n  - 구할 수 있는 것: 공개 보고서\n  - 구하기 어려운 것: 내부 현황')
+        write(self.d, files)
+        r = run(self.d, 'G1')
+        self.assertNotIn('자료 비었음', r.stdout)
+
     def test_blank_templates_fail(self):
         """빈 템플릿을 그대로 두면 통과하지 못해야 함"""
         tpl = {
