@@ -38,7 +38,7 @@ description: "수업용 기술영향평가(Technology Assessment) 에이전트 �
 | `04_evidence.md`(G4 통과) | 정책 옵션 → `ta-options` |
 | `05_options.md` | 모의 패널 예행 → `ta-panel`, 보고서 조립·G5·G6 |
 
-지난 단계 파일이 없으면 사례 저장소([ta-ai-agent](https://github.com/parkjui92/ta-ai-agent))의 시작 폴더에서 복사해 시작하도록 안내한다(한 주를 놓쳐도 시작할 수 있게).
+지난 단계 파일이 없으면 사례 저장소(수업 참여자에게 제공)의 시작 폴더에서 복사해 시작하도록 안내한다(한 주를 놓쳐도 시작할 수 있게).
 
 ### 2. 전체 모드 (강의자의 기준 결과물 만들기)
 
