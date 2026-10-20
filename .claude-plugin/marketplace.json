@@ -5,13 +5,13 @@
     "email": "parkjui92@gmail.com",
     "url": "https://github.com/parkjui92"
   },
-  "description": "기술영향평가를 실제 기관 절차대로 연습하는 수업용 에이전트 팀(신흥기술영향평가세미나).",
+  "description": "기술영향평가를 실제 기관 절차대로 연습하는 수업용 에이전트 팀.",
   "plugins": [
     {
       "name": "ta-kit",
       "source": "./",
       "description": "수업용 기술영향평가 에이전트 팀: 범위 결정 → 영향 식별 → 지평 탐색 → 증거 평가 → 정책 옵션·외부 검토, 역할 6 · 게이트 6 · AI 페르소나 모의 패널.",
-      "version": "0.1.4"
+      "version": "0.1.5"
     }
   ]
 }
